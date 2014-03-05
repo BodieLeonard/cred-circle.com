@@ -10,7 +10,7 @@ var templatePath,
 head.ready("libs", function() {
   // load the app
   head.js( 
-    {app: "./js/app.min.js"}
+    {app: "./js/app.js"}
   );
 });
 
