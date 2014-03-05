@@ -3,6 +3,8 @@
 // CONTACT BODIE.DEV@GMAIL.COM
 // DATE   ::  7/20/2013
 
+echo "<h1>Credera Circle API</h1>";
+
 $protocol = stripos($_SERVER['SERVER_PROTOCOL'],'https') === true ? 'https://' : 'http://';
 define("API_URL", $protocol . $_SERVER['SERVER_NAME']);
 
