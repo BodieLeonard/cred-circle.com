@@ -1,0 +1,12 @@
+RewriteEngine On
+
+RewriteCond %{ENV:HTTPS} on
+RewriteCond %{REQUEST_URI} !^/DIRECTORY/?.*$
+RewriteRule ^(.*)$ http://service.homepageapp.com/$1 [R,L]
+
+
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [QSA,L]

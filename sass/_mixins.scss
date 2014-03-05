@@ -1,0 +1,75 @@
+/* mixin */
+@mixin border() {
+  border: 0.1em solid $gray-dark;
+};
+
+@mixin margin-bottom($e:1em) {
+  margin-bottom:$e;
+};
+
+@mixin margin-top($e:1em) {
+  margin-top:$e;
+};
+
+@mixin button() {
+
+};
+
+@mixin selection {
+  ::-moz-selection { @content; }
+  ::selection { @content; }
+}
+
+
+@mixin box-shadow-top-bottom($r:0,$g:0,$b:0,$a:.3) {
+  @include single-box-shadow(white, 0, 1px, 0px, 0px);
+  //border-top: 1px solid rgba($r,$g,$b,$a); /*$gray-darkest;*/
+};
+
+@mixin border-bottom($color:#cccccc) {
+  border-top:none;
+  border-right: none;
+  border-left: none;
+  border-bottom: 1px solid $color; /*$gray-darkest;*/
+};
+
+@mixin font-size($e:$font-normal, $height:1em) {
+  font-size:$e;
+  line-height: $height;
+};
+
+@mixin gutters($padding:10px) {
+  padding-left:$padding;
+  padding-right: $padding;
+}
+
+@mixin selector-background() {
+  background-color: rgba(255,255,255,.4);
+}
+
+@mixin placeholder {
+  ::-webkit-input-placeholder {@content}
+  :-moz-placeholder           {@content}
+  ::-moz-placeholder          {@content}
+  :-ms-input-placeholder      {@content}
+}
+
+@include placeholder {
+  font-style:italic;
+  color: $black;
+}
+
+@mixin icon-left($url, $props:20px, $bg-pos:0, $bg-size:20px, $top:0px){
+
+  background-image: url($url);
+  fill:$yellow;
+  background-repeat: no-repeat;
+  background-size: $bg-size;
+  display: block;
+  height: $props;
+  width: $props;
+  background-position: $bg-pos;
+  float: left;
+  position: relative;
+  top:$top;
+}

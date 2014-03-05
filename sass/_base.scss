@@ -1,0 +1,739 @@
+
+input[type=text], input[type=number], input[type=email] {
+  text-transform: lowercase;
+}
+
+.app .view form input[type=text],
+.app .view form input[type=text]:focus,
+.app .view form input[type=text]:active,
+.app .view form input[type=password],
+.app .view form input[type=password]:focus,
+.app .view form input[type=password]:active,
+.app .view form input[type=email],
+.app .view form input[type=email]:focus,
+.app .view form input[type=email]:active{
+  background: none;
+  line-height: 1.5em;
+}
+
+@include selection {
+  color: $white;
+  background: $blue-lighter;
+}
+
+
+.app::after {
+  content: "";
+  background: url("img/clouds.png");
+  opacity: 1;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-repeat: no-repeat;
+  position: absolute;
+  background-size: cover;
+  z-index: 1;
+  background-position: center;
+}
+
+
+.app, .preloader {
+
+  @include text-shadow(0 1px 1px rgba(255,255,255,1));
+  @include font-size($font-normal);
+  position: absolute;
+  top: 0;
+  bottom: $height-footer;
+  left: 0;
+  right: 0;
+
+  background-color: $white; // Old browsers
+  @include filter-gradient($white, $gray-medium, horizontal); // IE6-8 fallback on horizontal gradient
+  $experimental-support-for-svg: true;
+  @include background-image(radial-gradient(center, ellipse cover,  $white 0%,$gray-medium 100%));
+
+  display: -webkit-box;
+
+  -webkit-overflow-scrolling: touch;
+  overflow: auto;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  -webkit-box-flex: 1;
+
+  height: 100%;
+  -moz-animation-duration: 0.5s;
+  -o-animation-duration: 0.5s;
+  -ms-animation-duration: 0.5s;
+
+
+
+  header {
+
+    background: $gray-dark;
+    background-color: #ffffff; // Old browsers
+    @include filter-gradient(#ffffff, #f6f6f6, vertical); // IE6-8
+    $experimental-support-for-svg: true;
+    /*@include background-image(linear-gradient(top,  #ffffff 0%,#f1f1f1 60%,#e1e1e1 61%,#f6f6f6 100%));*/
+    border-bottom:1px solid $gray-dark;
+    @include single-box-shadow($gray-dark, 0, 0, 10px, 0);
+    padding-top: 20px;
+    height:50px;
+    width: 100%;
+    display: table;
+    position: absolute;
+    opacity: $opacity;
+    z-index: 900;
+
+    a {
+      font-weight: 600;
+      text-align: center;
+      text-transform: uppercase;
+      color:$yellow;
+      min-width: 40px;
+      height: 40px;
+      width: 40px;
+      display: table-cell;
+      z-index: 100;
+      height: 40px;
+      width:auto;
+      position: absolute;
+
+      &.left {
+
+
+      }
+      &.right {
+        right: 10px;
+        top: 32px;
+      }
+      &.arrow-back{
+        width: 60px;
+        height:60px;
+        top:4px;
+        background: $img-arrow-back-yellow 10px 27px no-repeat;
+        background-size: 30px 30px;
+        display: block;
+      }
+    }
+
+    button, .button {
+      margin:0;
+      color: $white;
+      flex: 1;
+      padding:0 10px 0 5px;
+      font-weight: 600;
+      @include font-size($font-button);
+
+      .blue, &.blue{
+        background: $blue-light;
+      }
+
+    }
+
+    .title {
+      display: table-cell;
+      margin: 0 auto;
+      position: relative;
+      z-index: 10;
+      @include gutters;
+
+      h1 {
+
+        font-size: $font-title;
+        font-weight: lighter;
+        text-align: center;
+        text-transform: uppercase;
+        color:$red;
+        text-overflow: ellipsis;
+        position: relative;
+        margin: 0.5em 0;
+      }
+    }
+
+  }
+
+  .panel {
+    position: relative;
+    //padding: 1em;
+    -webkit-overflow-scrolling: touch;
+    overflow: auto;
+    -webkit-box-orient: vertical;
+    -webkit-box-align: stretch;
+    -webkit-box-flex: 1;
+    -webkit-transition: all 250ms ease;
+    -webkit-transform: translateX(0);
+    padding-top: 5em;
+    padding-bottom: 5em;
+    /*padding-top: 5em;
+    padding-bottom: 5em;*/
+    z-index: 2;
+
+
+    section,form {
+      p {
+        @include font-size($font-normal, 1.8em);
+        //color:$gray-darker;
+        //margin-left: .5em;
+        margin-bottom:0;
+        @include gutters;
+      }
+    }
+    .copy {
+      @include font-size($font-small, .5em);
+      color:$gray-mediumer;
+      @include gutters;
+    };
+
+  };
+
+  .view {
+
+    margin: 1em auto;
+    min-height: 280px;
+    position: relative;
+    overflow: hidden;
+
+    .selector-group, .selector {
+      .icon-role{
+        @include icon-left("img/icon-deal.svg", 35px, 50, 23px);
+        &.move {
+          top:-8px;
+        }
+      }
+    }
+
+    .selector-group, .selector {
+      .icon-invite{
+        @include icon-left("img/icon-invite.svg", 35px, 50, 23px);
+        &.move {
+          top:-8px;
+        }
+      }
+    }
+
+    .selector-group, .selector {
+      .icon-parties{
+        @include icon-left("img/icon-parties.svg", 35px, 50, 23px);
+        &.move {
+          top:-8px;
+        }
+      }
+    }
+
+    .selector-group, .selector {
+      .icon-user-add{
+        @include icon-left("img/icon-user-add.svg", 35px, 5px, 25px, 5px);
+
+      }
+    }
+    .selector-group, .selector {
+      .icon-checklist{
+        @include icon-left("img/icon-checklist.svg", 35px, 5px, 30px, -15px);
+
+      }
+    }
+
+
+    &.dashboard {
+      .selector-group {
+        .selector {
+          padding:1em .5em 1.4em 1em;
+        };
+      };
+    };
+
+    select {
+      -webkit-appearance: button;
+      width:100%;
+      //color: $gray-mediumer;
+      padding-left: 1em;
+    }
+
+    section.required {
+      //background:$blue-lighter;
+
+      //padding: 10px;
+      margin-bottom: 20px;
+      //border-radius: 5px;
+
+      label.title, p {
+        //color:$white;
+        //text-shadow: none !important;
+        //line-height: 1.6em;
+      }
+
+      a {
+        background-color:none; //$white;
+        @include border-bottom;
+        //color:$yellow;
+        box-shadow:none;
+        border-top:none;
+        &.button {
+          color:$white;
+        }
+      }
+
+    }
+
+    section.optional {
+      padding: 10px 0;
+      border-radius: 5px;
+      background: none; //$gray-lighter;
+      margin-bottom:20px;
+
+      .selector-group {
+      }
+    }
+
+    select, .selector {
+
+      position: relative;
+      display:block;
+      padding:1.2em 1em 1em 0em;
+      /*@include border;*/
+      @include margin-bottom;
+      @include border-radius($radius, $radius);
+      /*@include box-shadow-top-bottom;*/
+      cursor: pointer;
+      background:transparent $img-arrow-grey right center no-repeat;
+      @include border-bottom;
+      @include gutters;
+      @include selector-background;
+
+      .role {
+        margin-bottom: 5px;
+        display: block;
+        margin-right: 10px;
+        width: 60%;
+        line-height: 1.5em;
+        margin-left: 35px;
+      }
+      .address {
+        display: block;
+        margin-bottom: 5px;
+      }
+      &.padd {
+        padding-top:.5em;
+        padding-bottom:1.6em;
+      }
+      p {
+        margin:0;
+        text-transform: capitalize;
+
+      }
+      .current-step-title, .deal-id {
+        @include font-size(.7em);
+        //left: 1.5em;
+        color:$gray-mediumy;
+        bottom: 0.1em;
+        padding-right: 0;
+        padding-left: 0;
+        margin-left: 35px;
+        display: block;
+        line-height: 1.6em;
+      };
+
+      .current-step-number {
+        position: absolute;
+        right:2.3em;
+        @include border-radius(1em);
+        @include box-shadow-top-bottom;
+        text-align: center;
+        top: 34%;
+        color:$white;
+        padding: .5em 1em;
+        // needs latest Compass, add '@import "compass"' to your scss
+        background-color: rgb(169,3,41); // Old browsers
+        font-style: italic;
+        text-shadow: none;
+
+      }
+    };
+
+    label.title{
+
+      color:$gray-darker;
+      @include font-size($font-label, 1.5em);
+      @include margin-bottom(.2em);
+      display: block;
+      //margin-left:.3em;
+      @include gutters;
+
+    }
+
+    .user-role {
+      display:block;
+      margin-bottom:5px;
+    }
+    .selector-group {
+      //@include border;
+      @include margin-bottom;
+      background-color: none; //$white;
+      @include border-radius($radius, $radius);
+      /*@include box-shadow-top-bottom;*/
+      margin-top: 10px;
+
+      p {
+        margin-bottom:0;
+      }
+
+      .dot{
+        top: -15px;
+        position: relative;
+        float: right;
+        margin-right: 20px;
+        display: inline-block;
+        background:green;
+        border-radius: 50%;
+        width:10px;
+        height:10px;
+        &.dot-green {
+          //background:$blue-light;
+          background:url(img/checkmark-complete.svg) top left no-repeat;
+          background-size: contain;
+          width: 25px;
+          height: 30px;
+          position: relative;
+          top: -30px;
+
+        }
+        &.tag-preapprove {
+          top:-9px;
+        }
+        &.dot-red {
+          //background:$red;
+          background:url(img/icon-checkmark-add.svg) top left no-repeat;
+          width: 20px;
+          height: 20px;
+          background-size: cover;
+          top: -20px;
+        }
+      }
+
+      &.notifications {
+        background-color: $blue-light;
+        .selector {
+
+          color: $white;
+          background-image: none;
+          text-shadow: none;
+          /*border-bottom-color: $white;*/
+
+          &.last {
+            border:none;
+          }
+
+          p {
+            padding-right: 7em;
+            color: $white;
+          }
+          .delete {
+            position: absolute;
+            right: 1em;
+            width: 4em;
+            @include border-radius(1em);
+            @include box-shadow-top-bottom;
+            padding: 0.5em;
+            text-align: center;
+            bottom: .5em;
+            color:$white;
+            // needs latest Compass, add '@import "compass"' to your scss
+            background-color: rgb(169,3,41); // Old browsers
+          }
+
+          .current-step-title {
+            color: $white;
+            flex:1;
+          }
+        }
+
+
+      }
+      .selector {
+        margin:0;
+        //overflow: hidden;
+        //background-color: transparent;
+        @include border-bottom;
+        border-radius:0;
+        box-shadow: none;
+        @include gutters;
+
+        &.complete{
+          //background-color:$gray-lighter;
+          color:$black;
+        }
+        &.not-complete {
+
+        }
+      }
+
+      &.checklist,  {
+        .selector {
+          padding:1em .5em 1.4em 1em;
+
+          &.active {
+
+            background-color:$yellow;
+            @include box-shadow-top-bottom(204,183,62,1);
+            @include text-shadow(0 1px 1px rgba(0,0,0,.4));
+            background-color: $yellow-light; // Old browsers
+            @include filter-gradient($yellow-light, $yellow, vertical); // IE6-8
+            $experimental-support-for-svg: true;
+
+
+            p {
+
+              font-weight: 600;
+              color:$white;
+
+            }
+          }
+          &.pending {
+
+          }
+
+          &.complete {
+            color:$gray;
+            background-color:$gray-light;
+            .checkmark {
+              background:transparent $img-checkmark center center no-repeat;
+              width: 1.1em;
+              height: 1.1em;
+              position: absolute;
+              top: 35%;
+              right: 30%;
+              display:block;
+            }
+            .current-step-number {
+              color:$red;
+              background-color:$white;
+            }
+          }
+          &.incomplete {
+            .current-step-number {
+              color:$red;
+              background-color:$gray-light;
+            }
+          }
+
+        }
+
+      }
+    }
+
+    .approved {
+      color:$white;
+
+      .checkmark {
+        background:transparent $img-checkmark center center no-repeat;
+        width: 1.1em;
+        height: 1.1em;
+        position: absolute;
+        top: 35%;
+        right: 30%;
+        display:block;
+      }
+      .current-step-number {
+        color:$white;
+        background-color:$blue-light;
+      }
+    }
+
+    a {
+      color:$black;//$yellow;
+      text-decoration: none;
+    };
+    a.button {
+      margin-top: 10px;
+      color: $white;
+      display:block;
+    };
+    .logo {
+      display:block;
+      marging:0 auto;
+
+      .medium {
+        width: 15em;
+        margin:0 auto;
+        @include margin-bottom(3em);
+        display:block;
+      };
+    };
+
+    form {
+      fieldset {
+
+      };
+
+      .input-parent {
+        display:block;
+        padding: .7em .5em .7em 0;
+        //@include border;
+        @include margin-bottom;
+        background: none; //$white;
+        position: relative;
+        //@include border-radius($radius, $radius);
+        @include border-bottom;
+        display:-webkit-box;
+        border-radius: 0;
+
+        p.label {
+          padding: 1px;
+          width: auto;
+          font-size: 100%;
+          line-height: normal;
+          color: #888;
+          margin-left: 11px;
+        }
+
+        p.label + select {
+          background: none;
+          border: none;
+          padding: 0 0 0 10px;
+          margin: 0;
+        }
+
+        &.checkbox p{
+          width: 50%;
+          margin-right: 20px;
+        }
+
+        p {
+          //-webkit-box-flex:3;
+          //color:$gray-darkest;
+          margin: 0 inherit;
+          //margin-bottom: 10px;
+          //@include font-size($font-label, 1em);
+        }
+        label {
+          margin-left:10px;
+        }
+
+
+      }
+      .input-parent + p {
+        //line-height: 0;
+      }
+      select.input-parent {
+        @include gutters;
+      }
+      .selector-group {
+
+        &.flex input[type=text], input[type=number], input[type=date], placeholder {
+          text-align: right;
+          //@include font-size($font-label, 1em);
+          vertical-align: middle;
+          padding: 5px 0;
+          //-webkit-box-flex:1;
+          //width:20%;
+          @include gutters;
+        }
+        &.flex input[type=checkbox] {
+          /*width: 10%;
+          position: absolute;
+          right: 10px;
+          top: 50px*/
+        }
+        &.flex p {
+          display:block;
+          border:none;
+          outline: none;
+          background:none;
+          //-webkit-box-flex:1.0;
+          width:75%;
+          //line-height: 35px;
+          //color:$gray-dark;
+        }
+
+        .input-parent {
+          margin:0;
+          background-color: transparent;
+          @include border-bottom;
+          border-radius:0;
+          box-shadow: none;
+        }
+      }
+
+      input[type=text], input[type=number], input[type=password], input[type=email], input[type=date] {
+        display:block;
+        border:none;
+        outline: none;
+        background:none;
+        -webkit-box-flex:1.0;
+        //color:$gray-dark;
+        @include gutters;
+
+      };
+
+      input[type=checkbox] {
+        /* margin: 5px 10px 0 0;
+         right: 20px;
+         position: absolute;*/
+      }
+
+      .directions {
+        margin-bottom:20px;
+        input[type=checkbox] {
+          /*margin: 5px;
+          float:right;*/
+        }
+      }
+
+      .a-default {
+        display:block;
+        @include margin-top;
+        text-transform: uppercase;
+        @include font-size($font-normal);
+        padding:1em 0;
+        @include gutters;
+      };
+
+      button, .button {
+        @extend .button;
+        display: block;
+        margin-top: 10px;
+
+        .blue, &.blue{
+          background: $blue-light !important;
+        }
+
+        &.non-active {
+          color:$gray-darker;
+          background: $gray;
+          border-top:1px solid $gray-mediumer;
+          @include text-shadow(0 1px 1px rgba(255,255,255,1));
+
+          &.register {
+            margin-top:0;
+            background:$blue-light;
+            color:$white;
+            border-top: 1px solid $blue-lighter;
+            text-shadow:none;
+
+          }
+          &.red {
+            background: $red;
+            color:$white;
+            text-shadow: none;
+          }
+        };
+      };
+    };
+
+
+  };
+
+  button, .button {
+    @extend .button;
+    width:100%;
+
+    .blue, &.blue{
+      background: $blue-light !important;
+    }
+  }
+  .hide {
+    //display:none !important;
+  }
+
+};

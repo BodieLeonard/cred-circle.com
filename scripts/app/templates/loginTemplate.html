@@ -1,0 +1,21 @@
+<script type="text/x-handlebars" data-template-name="login">
+  
+  {{ outlet myAlerts }}
+  <section>
+    <span class="logo"><img class="medium" src="css/img/homepage-logo-medium.svg" alt="Homepageapp Logo"></span>
+      <form {{action "login" on="submit" target="controller"}}>
+        <fieldset>
+          <div class="selector-group">
+            <span class="input-parent"><p class="label">Email</p>{{view App.MyTextField valueBinding="email" placeholder="email"}}</span>
+            <span class="input-parent"><p class="label">Password</p>{{view App.MyTextField valueBinding="password" placeholder="password" type="password"}}</span>
+          </div>
+        </fieldset>
+        <div class="button-holder"><button type="submit">login</button></div>
+    <div class="btn-group">
+       <div class="button-holder">{{#linkTo "register" name="register" class="button non-active register"}}{{language app.register}}{{/linkTo}}</div>
+    </div>
+       {{#linkTo "forgotPassword" class="a-default"}}Forgot Password{{/linkTo}}
+      </form>
+    </section>
+
+</script>

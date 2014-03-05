@@ -1,0 +1,13 @@
+<script type="text/x-handlebars" data-template-name="topToolbar">
+
+	<header id="header">
+	  {{#if header.showBtnBack }}
+	    <a class="left arrow-back" {{ action "back"}}></a>
+	  {{/if}}
+	  <span class="title"><h1>{{ title }}</h1></span>
+	  {{#if header.showBtnNext}}
+	    <a class="right" {{ action "next"}}>{{ next }}</a>
+	  {{/if}}
+	</header>
+
+</script>
