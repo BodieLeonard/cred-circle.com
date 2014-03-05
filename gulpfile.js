@@ -13,7 +13,7 @@ var jshint = require('gulp-jshint'),
     prefix = require('gulp-autoprefixer'),
     browserSync = require('browser-sync'); 
 
-gulp.task('default', ['html', 'main', 'loader', 'libs', 'app']);
+gulp.task('default', ['html', 'main', 'loader', 'app']);
 
 gulp.task('html', function() {
   gulp.src([
@@ -43,15 +43,24 @@ gulp.task('loader', function() {
 
 gulp.task('libs', function() {
   gulp.src([
-    "./scripts/libs/*.js"
-    ])
+  	"./scripts/libs/jquery/1.11.0/jquery.js",
+  	"./scripts/libs/handlebars/1.0/handlebars.js",
+		"./scripts/libs/ember/1.4.0/ember.js",
+		"./scripts/libs/fastclick/fastclick.js",
+		"./scripts/libs/modernizr/2.6.2/modernizr.js",
+		"./scripts/libs/moment/moment.min.js"
+  	])
     .pipe(concat('./www/js/libs.min.js'))
-    .pipe(gulp.dest('./'))
+    .pipe(stripDebug())
+    .pipe(uglify())
+    .pipe(gulp.dest('./'));
 });
+
 
 gulp.task('app', function() {
   gulp.src([
-    "./scripts/libs/*.js"
+  	"./scripts/app/helpers/helper.agent.js",
+    "./scripts/app/app.js"
     ])
     .pipe(concat('./www/js/app.js'))
     .pipe(gulp.dest('./'))

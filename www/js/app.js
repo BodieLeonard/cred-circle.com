@@ -1,190 +1,151 @@
-/*
- * SwipeOut
- * version 0.2.0
- * https://github.com/ankane/swipeout
- * Licensed under the MIT license.
- */
+var getAgent = function() {
 
-/*jslint browser: true, indent: 2 */
-/*global Hammer*/
-
-function SwipeOut(listEl, options) {
-  'use strict';
-
-  options = options || {};
-
-  var swiped = false,
-    preventSwipe = false,
-    hammer = null,
-    deleteBtn = document.createElement("div"),
-    btnText = options.btnText || "Delete",
-    touchable = "ontouchstart" in window;
-
-  // generic helpers
-
-  // http://stackoverflow.com/questions/195951/change-an-elements-css-class-with-javascript
-  function addClass(el, cssClass) {
-    el.className += (" " + cssClass);
-  }
-
-  function removeElement(el) {
-    if (el.parentNode) {
-      el.parentNode.removeChild(el);
-    }
-  }
-
-  function addCss(css) {
-    var head = document.getElementsByTagName("head")[0],
-      style = document.createElement("style");
-
-    style.type = "text/css";
-    if (style.styleSheet) {
-      style.styleSheet.cssText = css;
-    } else {
-      style.appendChild(document.createTextNode(css));
-    }
-
-    head.appendChild(style);
-  }
-
-  // custom helpers
-
-  function findListItemNode(el) {
-    var currentEl = el;
-    while (currentEl && currentEl.parentNode !== listEl) {
-      currentEl = currentEl.parentNode;
-    }
-    return currentEl;
-  }
-
-  function transform(style) {
-    deleteBtn.style.transform = style;
-    deleteBtn.style.webkitTransform = style;
-    deleteBtn.style.mozTransform = style;
-    deleteBtn.style.oTransform = style;
-  }
-
-  function hideButton() {
-    swiped = false;
-    deleteBtn.style.opacity = 0;
-    transform("translate3d(20px,0,0)"); // use 3d for hardware acceleration
-  }
-
-  function centerButton() {
-    deleteBtn.style.top = ((findListItemNode(deleteBtn).offsetHeight - deleteBtn.offsetHeight) / 2) + "px";
-  }
-
-  function showButton() {
-    centerButton();
-    deleteBtn.style.opacity = 1;
-    transform("translate3d(0,0,0)");
-  }
-
-  // events
-
-  // trap click events on list when delete is shown
-  // http://stackoverflow.com/questions/6157486/jquery-trap-all-click-events-before-they-happen
-  function onClick(e) {
-    if (swiped || preventSwipe) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-    if (swiped && e.target === deleteBtn) {
-      var li = findListItemNode(e.target),
-        event = document.createEvent("Events");
-
-      // must send event before removal from the dom
-      event.initEvent("delete", true, true, null, null, null, null, null, null, null, null, null, null, null, null);
-      li.dispatchEvent(event);
-
-      removeElement(li);
-      hideButton();
-    }
-  }
-
-  function onTouchStart(e) {
-    preventSwipe = false;
-    if (swiped && e.target !== deleteBtn) {
-      e.preventDefault();
-      e.stopPropagation();
-      hideButton();
-      preventSwipe = true;
-    }
-  }
-
-  function onOrientationChange() {
-    centerButton();
-  }
-
-  function onDragStart(e) {
-    var direction = e.gesture.direction;
-    if (direction == Hammer.DIRECTION_LEFT || direction == Hammer.DIRECTION_RIGHT) {
-      if (!preventSwipe) {
-        if (swiped) {
-          hideButton();
-        } else {
-          // add delete button
-          swiped = true;
-          var li = findListItemNode(e.target);
-          removeElement(deleteBtn);
-          li.appendChild(deleteBtn);
-          showButton(deleteBtn);
+  var agent = navigator.userAgent.toLowerCase(),
+    obj = {
+      viewport:
+      {
+        is:
+        {
+          ie10    : !!(agent.match(/msie 10.0/)),
+          ie9     : !!(agent.match(/msie 9.0/)),
+          ie8     : !!(agent.match(/msie 8.0/)),
+          ie7     : !!(agent.match(/msie 7.0/)),
+          ie6     : !!(agent.match(/msie 6.0/)),
+          opera     : !!(agent.match(/opera/)),
+          chrome  : !!(agent.match(/chrome/)),
+          safari  : !!(agent.match(/safari/)),
+          firefox : !!(agent.match(/firefox/)),
+          android	: !!(agent.match(/android/)),
+          iOS		: !!(agent.match(/iphone/) || agent.match(/ipod/))
         }
       }
-    }
-  }
+    };
 
-  // attach / detach events
-
-  function attachEvents() {
-    listEl.addEventListener("click", onClick, true);
-    if (touchable) {
-      listEl.addEventListener("touchstart", onTouchStart, false);
-    } else {
-      listEl.addEventListener("mousedown", onTouchStart, false);
-    }
-    window.addEventListener("orientationchange", onOrientationChange, false);
-    hammer = Hammer(listEl).on("dragstart", onDragStart);
-  }
-
-  function detachEvents() {
-    removeElement(deleteBtn);
-    hammer.off("dragstart");
-    window.removeEventListener("orientationchange", onOrientationChange, false);
-    if (touchable) {
-      listEl.removeEventListener("touchstart", onTouchStart, false);
-    } else {
-      listEl.removeEventListener("mousedown", onTouchStart, false);
-    }
-    listEl.removeEventListener("click", onClick, true);
-  }
-
-  // add text
-  deleteBtn.appendChild(document.createTextNode(btnText));
-
-  // style button
-  deleteBtn.style.position = "absolute";
-  deleteBtn.style.right = "6px";
-  deleteBtn.style.transition = "transform 0.25s ease-in-out, opacity 0.25s ease-in-out";
-  deleteBtn.style.webkitTransition = "-webkit-transform 0.25s ease-in-out, opacity 0.25s ease-in-out";
-  deleteBtn.style.mozTransition = "-moz-transform 0.25s ease-in-out, opacity 0.25s ease-in-out";
-  deleteBtn.style.oTransition = "-o-transform 0.25s ease-in-out, opacity 0.25s ease-in-out";
-  hideButton();
-  addClass(deleteBtn, "delete-btn");
-
-  // style list items
-  // TODO insert only once per page and clean up
-  addCss(".swipe-out > li { position: relative; }");
-
-  // style list
-  listEl.style.overflow = "hidden";
-  addClass(listEl, "swipe-out");
-
-  attachEvents();
-
-  // public methods
-
-  this.destroy = function () {
-    detachEvents();
+  for (var key in obj.viewport) {
+    var o = obj.viewport[key];
+    for (var prop in o) {
+      if(o[prop])
+        agent = prop;
+    };
   };
-}
+
+  return agent;
+};
+
+/**
+ * Initailize ember app
+ */
+App = Ember.Application.create({
+  rootElement: '.wrapper',
+  debug: true,
+  LOG_VERSION: "0.009",
+  LOG_TRANSITIONS: true,
+  cache: true,
+  APP_NAME: 'Homepageapp',
+  APP_URL: 'http://services.jwilliams.biz',
+  //APP_URL: 'http://service.homepageapp.com',
+  APP_YEAR: function(){
+    var date = new Date(),
+    year = date.getFullYear();
+    return year;
+  }
+});
+
+/**
+ * For touch events add FastClick
+ * prevents the 300 milisecond delay
+ */
+window.addEventListener('load', function() { new FastClick(document.body); }, false);
+
+/**
+ * Phonegap Initialize
+ */
+App.reopen({
+
+  phoneGapApp: {
+    // Application Constructor
+    initialize: function () {
+      this.bindEvents();
+    },
+
+    bindEvents: function () {
+      console.log("Phonegap :: bind events");
+      document.addEventListener('deviceready', this.onDeviceReady, false);
+      document.addEventListener('offline', this.onOffline, false);
+      document.addEventListener("pause", this.onPause, false);
+    },
+
+    onDeviceReady: function () {
+      console.log("Phonegap :: device ready");
+      App.phoneGapApp.receivedEvent('deviceready');
+
+    },
+    // Update DOM on a Received Event
+    receivedEvent: function (id) {
+      console.log('Phonegap :: Received Event: ' + id);
+
+    },
+    onOffline: function() {
+      navigator.notification.alert("Check internet connection", null, "No Service", "ok")
+    },
+    onPause: function() {
+      //navigator.notification.alert("Welcome back.", null, "Login", "ok")
+    }
+
+  }
+});
+
+/**
+ * If user is on a device
+ * Load Phonegap
+ */
+if (window.device) {
+  // A mobile device is being used
+  App.phoneGapApp.onDeviceReady();
+  App.phoneGapApp.initialize();
+} else {
+  //If a mobile device is not being used then lets kick off the app
+
+};
+
+(function($){
+
+  (function(G,und) {
+    'use strict';
+    var load = function() {
+      var tStart, body = document.body;
+      tStart = function(e) {
+        e = e || G.event;
+        var coords = e.changedTouches[0].clientX,
+          tEnd = function(e) {
+            e = e || G.event;
+            var currentX = e.changedTouches[0].clientX;
+            if (body.removeEventListener) {
+              body.removeEventListener('touchend',tEnd,false);
+            } else {//shouldn't be possible, but I don't know all browsers, of course
+              body.detachEvent('ontouchend',tEnd);
+            } if ((coords - currentX) <= 50)
+            {//too little movement
+              //alert('moved, but no real swipe');
+            } else {
+              // swipe
+            }
+          };
+        if (body.addEventListener) {
+          return body.addEventListener('touchend',tEnd,false);
+        }
+        body.attachEvent('ontouchend',tEnd);
+      };
+      if (G.removeEventListener) {
+        body.addEventListener('touchstart',tStart,false);
+        return G.removeEventListener('load',load,false);
+      } body.attachEvent('ontouchstart',tStart);
+      return G.detachEvent('onload',load);
+    };
+    if (G.addEventListener) {
+      return G.addEventListener('load',load,false);
+    }
+    return G.attachEvent('onload',load);
+  }(this));
+
+}(jQuery));

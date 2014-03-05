@@ -29,14 +29,7 @@ head.ready("app", function() {
     templatePath = "./desktop/",
     appFilePath = "./";
 
-  } else {
-
-    // LOAD DESKTOP FILES
-    head.js({desktopStyles:"css/desktop-homepageapp.min.css"})
-
-    templatePath = "./mobile/",
-    appFilePath = "../";
-  }
+  } 
 
   // if a agent of android is detected load cordova
   if(getAgent() === "android"){
@@ -54,6 +47,6 @@ head.ready("app", function() {
     // load templates files
     //{templates:appFilePath+"js/templates.min.js"},
     // load application files
-    {applicationFiles:appFilePath+"js/mvcfiles.min.js"}
+    //{applicationFiles:appFilePath+"js/mvcfiles.min.js"}
   );  
 });
