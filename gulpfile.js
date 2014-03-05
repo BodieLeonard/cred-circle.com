@@ -13,4 +13,11 @@ var jshint = require('gulp-jshint'),
     prefix = require('gulp-autoprefixer'),
     browserSync = require('browser-sync'); 
 
-
+gulp.task('html', function() {
+  gulp.src([
+    "./scripts/index.html"
+    ])
+    .pipe(concat('./www/index.html'))
+    .pipe(minifyHTML())
+    .pipe(gulp.dest('./'))
+});
