@@ -1,5 +1,5 @@
 <?php
 
 // ROUTES
-$user 						= "user";
-
+$contact = "/contact";
+$user = "user";

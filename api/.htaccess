@@ -2,7 +2,7 @@ RewriteEngine On
 
 RewriteCond %{ENV:HTTPS} on
 RewriteCond %{REQUEST_URI} !^/DIRECTORY/?.*$
-RewriteRule ^(.*)$ http://service.homepageapp.com/$1 [R,L]
+RewriteRule ^(.*)$ http://api.cred-circle.com/$1 [R,L]
 
 
 RewriteBase /
