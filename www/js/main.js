@@ -47,6 +47,6 @@ head.ready("app", function() {
     // load templates files
     //{templates:appFilePath+"js/templates.min.js"},
     // load application files
-    //{applicationFiles:appFilePath+"js/mvcfiles.min.js"}
+    {applicationFiles:"./js/mvcfiles.js"}
   );  
 });

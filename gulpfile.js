@@ -13,7 +13,7 @@ var jshint = require('gulp-jshint'),
     prefix = require('gulp-autoprefixer'),
     browserSync = require('browser-sync'); 
 
-gulp.task('default', ['html', 'main', 'loader', 'app']);
+gulp.task('default', ['html', 'main', 'loader', 'app', 'mvc']);
 
 gulp.task('html', function() {
   gulp.src([
@@ -63,5 +63,13 @@ gulp.task('app', function() {
     "./scripts/app/app.js"
     ])
     .pipe(concat('./www/js/app.js'))
+    .pipe(gulp.dest('./'))
+});
+
+gulp.task('mvc', function() {
+  gulp.src([
+  	"./scripts/app/*/*.js"
+    ])
+    .pipe(concat('./www/js/mvcfiles.js'))
     .pipe(gulp.dest('./'))
 });
